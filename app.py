@@ -17,7 +17,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 APPLIED_JOBS_TRACKER = []
 
 # ==========================================
-# ✅ YOUR OFFICIAL GOOGLE ADSENSE CODE INJECTED
+# ✅ YOUR OFFICIAL GOOGLE ADSENSE SCRIPT CODE INJECTED
 # ==========================================
 AD_CODE_SNIPPET = """
 <div style="text-align: center; margin: 20px auto; max-width: 100%;">
@@ -26,7 +26,7 @@ AD_CODE_SNIPPET = """
 </div>
 """
 
-# --- 🔥 CRITICAL FIX: ROUTE FOR GOOGLE TO INSTANTLY READ YOUR ADS.TXT VALUE ---
+# --- ROUTE FOR GOOGLE TO INSTANTLY READ YOUR ADS.TXT VALUE ---
 @app.get("/ads.txt", response_class=PlainTextResponse)
 async def get_ads_txt():
     return "google.com, pub-6042910797679767, DIRECT, f08c47fec0942fa0"
@@ -39,6 +39,7 @@ async def main_page():
         <head>
             <title>Universal Auto-Applier Setup</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6042910797679767" crossorigin="anonymous"></script>
         </head>
         <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background-color: #f8f9fa;">
             
@@ -103,6 +104,7 @@ async def tracker_page():
         <head>
             <title>Application Tracking Dashboard</title>
             <meta http-equiv="refresh" content="3">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6042910797679767" crossorigin="anonymous"></script>
         </head>
         <body style="font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f8f9fa;">
             <p><a href="/" style="color:#007bff; text-decoration:none;">← Back to Application Form</a></p>
