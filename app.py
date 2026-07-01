@@ -4,12 +4,12 @@ from fastapi import FastAPI, Form, UploadFile, File, BackgroundTasks
 from fastapi.responses import HTMLResponse, RedirectResponse
 from playwright.async_api import async_playwright
 
-# Set permanent storage path for Playwright browser execution on Render
+# Set the permanent storage path for the Playwright browser immediately on startup
 os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/opt/render/project/src/.cache/ms-playwright"
 
 app = FastAPI()
 
-# Setup local directory to save uploaded resumes
+# Setup a local directory to save uploaded resumes
 UPLOAD_DIR = "./resumes"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -17,17 +17,21 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 APPLIED_JOBS_TRACKER = []
 
 # ==========================================
-# ⚠️ PASTE YOUR AD SCRIPT/CODE BETWEEN THESE QUOTES
-# Examples: Google AdSense, Ezoic, or custom banner HTML code
+# 📊 YOUR IMAGE AD BANNER SLOT
+# Change the href link or the img src link below whenever you want to update your ad!
 # ==========================================
 AD_CODE_SNIPPET = """
-<div style="background: #f1f3f5; border: 1px dashed #ced4da; padding: 20px; text-align: center; margin: 15px auto; max-width: 100%; border-radius: 4px;">
-    <p style="margin: 0; color: #6c757d; font-size: 12px; letter-spacing: 1px;">ADVERTISEMENT</p>
-    <small style="color: #adb5bd;">Your Ad Code (like Google AdSense) goes here</small>
+<div style="text-align: center; margin: 20px auto; max-width: 100%;">
+    <p style="margin: 0 0 5px 0; color: #6c757d; font-size: 11px; letter-spacing: 1px; font-weight: bold;">SPONSORED AD</p>
+    <a href="https://www.google.com" target="_blank">
+        <img src="https://placehold.co/728x90/007bff/ffffff?text=Place+Your+Ad+Banner+Here" 
+             alt="Advertisement" 
+             style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    </a>
 </div>
 """
 
-# --- 1. THE SETUP FORM PAGE (With Top and Bottom Ad Slots) ---
+# --- 1. THE SETUP FORM PAGE ---
 @app.get("/", response_class=HTMLResponse)
 async def main_page():
     return f"""
@@ -68,7 +72,7 @@ async def main_page():
     </html>
     """
 
-# --- 2. THE TRACKER DASHBOARD PAGE (With Header Ad Slot) ---
+# --- 2. THE TRACKER DASHBOARD PAGE ---
 @app.get("/tracker", response_class=HTMLResponse)
 async def tracker_page():
     tracker_rows = ""
@@ -139,6 +143,7 @@ async def run_job_automation(user_info: dict, keywords: str, location: str):
     async with async_playwright() as p:
         try:
             os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/opt/render/project/src/.cache/ms-playwright"
+            
             browser = await p.chromium.launch(headless=True)
             context = await browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
