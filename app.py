@@ -159,7 +159,7 @@ async def run_job_automation(user_info: dict, keywords: str, location: str):
             formatted_location = location.replace(" ", "%20")
             search_url = f"https://www.linkedin.com/jobs/search?keywords={formatted_keywords}&location={formatted_location}"
             
-            APPLIED_JOBS_TRACKER[0]["status"] = "Connecting to Platform Indexes..."
+            APPLIED_JOBS_TRACKER[0].status = "Connecting to Platform Indexes..."
             
             await page.goto(search_url, wait_until="domcontentloaded")
             await page.wait_for_timeout(5000)
