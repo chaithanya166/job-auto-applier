@@ -4,29 +4,41 @@ from fastapi import FastAPI, Form, UploadFile, File, BackgroundTasks
 from fastapi.responses import HTMLResponse, RedirectResponse
 from playwright.async_api import async_playwright
 
-# Set the permanent storage path for the Playwright browser immediately on startup
+# Set permanent storage path for Playwright browser execution on Render
 os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/opt/render/project/src/.cache/ms-playwright"
 
 app = FastAPI()
 
-# Setup a local directory to save uploaded resumes
+# Setup local directory to save uploaded resumes
 UPLOAD_DIR = "./resumes"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Global memory storage for tracking applied jobs
 APPLIED_JOBS_TRACKER = []
 
-# --- 1. THE SETUP FORM PAGE ---
+# ==========================================
+# ⚠️ PASTE YOUR AD SCRIPT/CODE BETWEEN THESE QUOTES
+# Examples: Google AdSense, Ezoic, or custom banner HTML code
+# ==========================================
+AD_CODE_SNIPPET = """
+<div style="background: #f1f3f5; border: 1px dashed #ced4da; padding: 20px; text-align: center; margin: 15px auto; max-width: 100%; border-radius: 4px;">
+    <p style="margin: 0; color: #6c757d; font-size: 12px; letter-spacing: 1px;">ADVERTISEMENT</p>
+    <small style="color: #adb5bd;">Your Ad Code (like Google AdSense) goes here</small>
+</div>
+"""
+
+# --- 1. THE SETUP FORM PAGE (With Top and Bottom Ad Slots) ---
 @app.get("/", response_class=HTMLResponse)
 async def main_page():
-    return """
+    return f"""
     <html>
         <head>
             <title>Universal Auto-Applier Setup</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
         <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background-color: #f8f9fa;">
-            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;">
+            
+            {AD_CODE_SNIPPET} <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;">
                 <h2 style="margin-top:0; color:#333;">🚀 Universal Job Auto-Applier Setup</h2>
                 <p style="color: #666; font-size: 14px;">Fill out your details. Once submitted, monitor the live tracker tab.</p>
                 <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
@@ -51,11 +63,12 @@ async def main_page():
                 <br>
                 <a href="/tracker" style="display:block; text-align:center; color:#007bff; text-decoration:none;">View Existing Application Tracker →</a>
             </div>
-        </body>
+
+            {AD_CODE_SNIPPET} </body>
     </html>
     """
 
-# --- 2. THE TRACKER DASHBOARD PAGE ---
+# --- 2. THE TRACKER DASHBOARD PAGE (With Header Ad Slot) ---
 @app.get("/tracker", response_class=HTMLResponse)
 async def tracker_page():
     tracker_rows = ""
@@ -89,7 +102,8 @@ async def tracker_page():
         </head>
         <body style="font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f8f9fa;">
             <p><a href="/" style="color:#007bff; text-decoration:none;">← Back to Application Form</a></p>
-            <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 4px solid #007bff;">
+            
+            {AD_CODE_SNIPPET} <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 4px solid #007bff;">
                 <h3 style="margin-top:0; color:#333; display: flex; justify-content: space-between; align-items: center;">
                     📋 Live Job Tracking Dashboard
                     <span style="font-size:12px; color:#666; font-weight:normal;">🔄 Auto-updating every 3s</span>
@@ -124,10 +138,7 @@ async def run_job_automation(user_info: dict, keywords: str, location: str):
     
     async with async_playwright() as p:
         try:
-            # Set environmental check directly inside worker sequence
             os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/opt/render/project/src/.cache/ms-playwright"
-            
-            # Headless execution optimized for cloud deployment variables
             browser = await p.chromium.launch(headless=True)
             context = await browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
