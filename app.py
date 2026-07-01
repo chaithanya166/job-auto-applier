@@ -17,7 +17,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 APPLIED_JOBS_TRACKER = []
 
 # ==========================================
-# ✅ YOUR OFFICIAL GOOGLE ADSENSE SCRIPT CODE INJECTED
+# ✅ GLOBAL ADSENSE CODE INJECTED FOR ALL SLOTS
 # ==========================================
 AD_CODE_SNIPPET = """
 <div style="text-align: center; margin: 20px auto; max-width: 100%;">
@@ -26,7 +26,7 @@ AD_CODE_SNIPPET = """
 </div>
 """
 
-# --- ROUTE FOR GOOGLE TO INSTANTLY READ YOUR ADS.TXT VALUE ---
+# --- ROUTE FOR GOOGLE TO INSTANTLY READ YOUR AUTHORIZED ADS.TXT VALUE ---
 @app.get("/ads.txt", response_class=PlainTextResponse)
 async def get_ads_txt():
     return "google.com, pub-6042910797679767, DIRECT, f08c47fec0942fa0"
@@ -37,7 +37,8 @@ async def main_page():
     return f"""
     <html>
         <head>
-            <meta charset="utf-8"> <title>Universal Auto-Applier Setup</title>
+            <meta charset="utf-8">
+            <title>Universal Auto-Applier Setup</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6042910797679767" crossorigin="anonymous"></script>
         </head>
