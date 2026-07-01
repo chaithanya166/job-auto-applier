@@ -17,17 +17,12 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 APPLIED_JOBS_TRACKER = []
 
 # ==========================================
-# 📊 YOUR IMAGE AD BANNER SLOT
-# Change the href link or the img src link below whenever you want to update your ad!
+# ✅ YOUR OFFICIAL GOOGLE ADSENSE CODE INJECTED
 # ==========================================
 AD_CODE_SNIPPET = """
 <div style="text-align: center; margin: 20px auto; max-width: 100%;">
-    <p style="margin: 0 0 5px 0; color: #6c757d; font-size: 11px; letter-spacing: 1px; font-weight: bold;">SPONSORED AD</p>
-    <a href="https://www.google.com" target="_blank">
-        <img src="https://placehold.co/728x90/007bff/ffffff?text=Place+Your+Ad+Banner+Here" 
-             alt="Advertisement" 
-             style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-    </a>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6042910797679767" crossorigin="anonymous"></script>
+    <div style="margin: 5px; color: #6c757d; font-size: 11px; letter-spacing: 1px; font-weight: bold;">SPONSORED ADVERTISEMENT</div>
 </div>
 """
 
@@ -236,7 +231,7 @@ async def start_automation(
     
     resume_path = os.path.join(UPLOAD_DIR, resume.filename)
     with open(resume_path, "wb") as buffer:
-        buffer.write(await resume.read())
+        buffer.write(await await resume.read())
         
     user_info = {
         "first_name": first_name,
