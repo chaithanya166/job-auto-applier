@@ -1,7 +1,7 @@
 import os
 import asyncio
 from fastapi import FastAPI, Form, UploadFile, File, BackgroundTasks
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, PlainTextResponse
 from playwright.async_api import async_playwright
 
 # Set the permanent storage path for the Playwright browser immediately on startup
@@ -25,6 +25,11 @@ AD_CODE_SNIPPET = """
     <div style="margin: 5px; color: #6c757d; font-size: 11px; letter-spacing: 1px; font-weight: bold;">SPONSORED ADVERTISEMENT</div>
 </div>
 """
+
+# --- ROUTE FOR GOOGLE TO READ YOUR ADS.TXT FILE ---
+@app.get("/ads.txt", response_class=PlainTextResponse)
+async def get_ads_txt():
+    return "google.com, pub-6042910797679767, DIRECT, f08c47fec0942fa0"
 
 # --- 1. THE SETUP FORM PAGE ---
 @app.get("/", response_class=HTMLResponse)
@@ -231,7 +236,7 @@ async def start_automation(
     
     resume_path = os.path.join(UPLOAD_DIR, resume.filename)
     with open(resume_path, "wb") as buffer:
-        buffer.write(await await resume.read())
+        buffer.write(await resume.read()) # Typo fixed here!
         
     user_info = {
         "first_name": first_name,
