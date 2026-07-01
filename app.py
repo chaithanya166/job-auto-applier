@@ -4,11 +4,16 @@ from fastapi import FastAPI, Form, UploadFile, File, BackgroundTasks
 from fastapi.responses import HTMLResponse, RedirectResponse
 from playwright.async_api import async_playwright
 
+# Set the permanent storage path for the Playwright browser immediately on startup
+os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/opt/render/project/src/.cache/ms-playwright"
+
 app = FastAPI()
 
+# Setup a local directory to save uploaded resumes
 UPLOAD_DIR = "./resumes"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+# Global memory storage for tracking applied jobs
 APPLIED_JOBS_TRACKER = []
 
 # --- 1. THE SETUP FORM PAGE ---
@@ -107,7 +112,7 @@ async def tracker_page():
     </html>
     """
 
-# --- 3. THE CRAWLER ENGINE ---
+# --- 3. THE LIVE CLOUD RUNNER ENGINE ---
 async def run_job_automation(user_info: dict, keywords: str, location: str):
     global APPLIED_JOBS_TRACKER
     
@@ -119,6 +124,10 @@ async def run_job_automation(user_info: dict, keywords: str, location: str):
     
     async with async_playwright() as p:
         try:
+            # Set environmental check directly inside worker sequence
+            os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/opt/render/project/src/.cache/ms-playwright"
+            
+            # Headless execution optimized for cloud deployment variables
             browser = await p.chromium.launch(headless=True)
             context = await browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
