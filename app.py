@@ -26,7 +26,7 @@ AD_CODE_SNIPPET = """
 </div>
 """
 
-# --- ROUTE FOR GOOGLE TO READ YOUR ADS.TXT FILE ---
+# --- 🔥 CRITICAL FIX: ROUTE FOR GOOGLE TO INSTANTLY READ YOUR ADS.TXT VALUE ---
 @app.get("/ads.txt", response_class=PlainTextResponse)
 async def get_ads_txt():
     return "google.com, pub-6042910797679767, DIRECT, f08c47fec0942fa0"
@@ -236,7 +236,7 @@ async def start_automation(
     
     resume_path = os.path.join(UPLOAD_DIR, resume.filename)
     with open(resume_path, "wb") as buffer:
-        buffer.write(await resume.read()) # Typo fixed here!
+        buffer.write(await resume.read())
         
     user_info = {
         "first_name": first_name,
