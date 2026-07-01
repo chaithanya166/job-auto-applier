@@ -37,7 +37,7 @@ async def main_page():
     return f"""
     <html>
         <head>
-            <title>Universal Auto-Applier Setup</title>
+            <meta charset="utf-8"> <title>Universal Auto-Applier Setup</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6042910797679767" crossorigin="anonymous"></script>
         </head>
@@ -102,6 +102,7 @@ async def tracker_page():
     return f"""
     <html>
         <head>
+            <meta charset="utf-8">
             <title>Application Tracking Dashboard</title>
             <meta http-equiv="refresh" content="3">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6042910797679767" crossorigin="anonymous"></script>
